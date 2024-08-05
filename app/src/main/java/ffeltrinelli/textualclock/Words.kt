@@ -1,10 +1,10 @@
 package ffeltrinelli.textualclock
 
-interface Symbol {
+interface Word {
     fun text(): String
 }
 
-enum class Connector(private val text: String): Symbol {
+enum class Connector(private val text: String): Word {
     IT_IS("it's"),
     PAST("past"),
     TO("to"),
@@ -13,7 +13,7 @@ enum class Connector(private val text: String): Symbol {
     override fun text() = text
 }
 
-enum class Minutes(private val text: String): Symbol {
+enum class Minutes(private val text: String): Word {
     FIVE("five"),
     TEN("ten"),
     QUARTER("quarter"),
@@ -23,7 +23,7 @@ enum class Minutes(private val text: String): Symbol {
     override fun text() = text
 }
 
-enum class Hour(private val text: String): Symbol {
+enum class Hour(private val text: String): Word {
     ONE("one"),
     TWO("two"),
     THREE("three"),
@@ -40,7 +40,7 @@ enum class Hour(private val text: String): Symbol {
     override fun text() = text
 }
 
-class Filler(length: Int): Symbol {
+class Filler(length: Int): Word {
     private val text = "-".repeat(length)
 
     override fun text() = text
