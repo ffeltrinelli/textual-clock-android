@@ -2,6 +2,7 @@ package ffeltrinelli.textualclock
 
 interface Word {
     fun text(): String
+    fun length(): Int = text().length
 }
 
 enum class Connector(private val text: String): Word {

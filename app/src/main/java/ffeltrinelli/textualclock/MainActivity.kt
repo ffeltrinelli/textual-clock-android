@@ -43,12 +43,12 @@ fun TextualClock(clockMatrix: ClockMatrix, modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(clockMatrix.maxRowChars()),
+            columns = GridCells.Fixed(clockMatrix.rowsLength),
             modifier = modifier
         ) {
-            clockMatrix.rows().forEach { rowSymbols ->
-                rowSymbols.forEach { symbol ->
-                    symbol.text().forEach { char ->
+            clockMatrix.rows.forEach { row ->
+                row.words.forEach { word ->
+                    word.text().forEach { char ->
                         item { CharCell(char) }
                     }
                 }
