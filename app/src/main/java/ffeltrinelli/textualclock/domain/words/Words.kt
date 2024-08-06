@@ -1,4 +1,4 @@
-package ffeltrinelli.textualclock
+package ffeltrinelli.textualclock.domain.words
 
 interface Word {
     fun text(): String
@@ -39,11 +39,4 @@ enum class Hour(private val text: String): Word {
     TWELVE("twelve");
 
     override fun text() = text
-}
-
-class Filler(length: Int): Word {
-    private val text = "-".repeat(length)
-
-    override fun text() = text
-
 }

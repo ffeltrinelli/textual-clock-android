@@ -1,34 +1,22 @@
-package ffeltrinelli.textualclock
+package ffeltrinelli.textualclock.domain
 
-/**
- * Words in a row.
- */
-data class WordsRow(val words: List<Word>) {
-    /**
-     * Sum of the length of all the words of this row.
-     */
-    val length = words.sumOf { it.length() }
-
-    /**
-     * Add filler elements of the given length to this row.
-     */
-    fun addFillers(length: Int): WordsRow {
-        // TODO distribute filler length between row's words randomly
-        return WordsRow(words + Filler(length))
-    }
-}
+import ffeltrinelli.textualclock.domain.words.Connector
+import ffeltrinelli.textualclock.domain.words.Hour
+import ffeltrinelli.textualclock.domain.words.Minutes
+import ffeltrinelli.textualclock.domain.words.Word
+import kotlin.random.Random
 
 /**
  * A matrix of rows of words.
  * All rows have the same length.
  */
-data class ClockMatrix(
+class ClockMatrix(
     val rows: List<WordsRow>
 ) {
-    class Builder {
+    class Builder(private val generator: RandomGenerator) {
         private val rows: MutableList<WordsRow> = mutableListOf()
 
-        fun addRow(vararg row: Word) = apply { rows.add(WordsRow(row.toList())) }
+        fun addRow(vararg row: Word) = apply { rows.add(WordsRow(row.toList(), generator)) }
 
         /**
          * Build the matrix adding filler elements so that all rows have the same length of the
@@ -46,7 +34,9 @@ data class ClockMatrix(
     val rowsLength = rows.first().length
 
     companion object {
-        val ENGLISH_CLOCK = Builder()
+        private val GENERATOR = RandomGenerator(Random)
+
+        val ENGLISH_CLOCK = Builder(GENERATOR)
             .addRow(Connector.IT_IS)
             .addRow(Minutes.QUARTER)
             .addRow(Minutes.TWENTY, Minutes.FIVE)
