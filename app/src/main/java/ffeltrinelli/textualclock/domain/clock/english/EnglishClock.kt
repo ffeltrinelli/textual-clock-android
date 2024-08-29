@@ -15,31 +15,32 @@ import kotlin.random.Random
  */
 class EnglishClock(generator: RandomGenerator): ClockMatrix(initEnglishWords(generator)) {
     companion object {
+        fun initEnglishWords(generator: RandomGenerator): List<WordsRow> {
+            val rows: List<WordsRow> = listOf(
+                row(Connector.IT_IS),
+                row(Minutes.QUARTER),
+                row(Minutes.TWENTY, Minutes.FIVE),
+                row(Minutes.HALF, Minutes.TEN, Connector.TO),
+                row(Connector.PAST, Hour.NINE),
+                row(Hour.ONE, Hour.SIX, Hour.THREE),
+                row(Hour.FOUR, Hour.FIVE, Hour.TWO),
+                row(Hour.EIGHT, Hour.ELEVEN),
+                row(Hour.SEVEN, Hour.TWELVE),
+                row(Hour.TEN, Connector.O_CLOCK),
+            )
+
+            // add filler elements so that all rows have the same length of the longest row
+            val maxRowLength = rows.maxOf { it.length }
+            val normalizedRows: List<WordsRow> = rows.map { row ->
+                if (row.length < maxRowLength) row.addFillers(maxRowLength-row.length, generator) else row
+            }
+            return normalizedRows
+        }
+
         // TODO add Dependency Injection
         private val GENERATOR = RandomGenerator(Random)
         val INSTANCE = EnglishClock(GENERATOR)
     }
-}
-
-fun initEnglishWords(generator: RandomGenerator): List<WordsRow> {
-    val rows: List<WordsRow> = listOf(
-        row(Connector.IT_IS),
-        row(Minutes.QUARTER),
-        row(Minutes.TWENTY, Minutes.FIVE),
-        row(Minutes.HALF, Minutes.TEN, Connector.TO),
-        row(Connector.PAST, Hour.NINE),
-        row(Hour.ONE, Hour.SIX, Hour.THREE),
-        row(Hour.FOUR, Hour.FIVE, Hour.TWO),
-        row(Hour.EIGHT, Hour.ELEVEN),
-        row(Hour.SEVEN, Hour.TWELVE),
-        row(Hour.TEN, Connector.O_CLOCK),
-    )
-
-    val maxRowLength = rows.maxOf { it.length }
-    val normalizedRows: List<WordsRow> = rows.map { row ->
-        if (row.length < maxRowLength) row.addFillers(maxRowLength-row.length, generator) else row
-    }
-    return normalizedRows
 }
 
 /**

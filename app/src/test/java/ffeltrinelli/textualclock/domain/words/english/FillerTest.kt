@@ -1,11 +1,10 @@
-package ffeltrinelli.textualclock.domain.words
+package ffeltrinelli.textualclock.domain.words.english
 
 import ffeltrinelli.textualclock.domain.RandomGenerator
-import ffeltrinelli.textualclock.domain.words.english.Filler
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
-import org.junit.Assert.assertEquals
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 
@@ -23,7 +22,7 @@ class FillerTest {
 
         val result = underTest.text()
 
-        assertEquals("", result)
+        Assert.assertEquals("", result)
     }
 
     @Test
@@ -33,7 +32,7 @@ class FillerTest {
 
         val result = underTest.text()
 
-        assertEquals("x", result)
+        Assert.assertEquals("x", result)
     }
 
     @Test
@@ -43,6 +42,6 @@ class FillerTest {
 
         val result = underTest.text()
 
-        assertEquals("ab", result)
+        Assert.assertEquals("ab", result)
     }
 }
