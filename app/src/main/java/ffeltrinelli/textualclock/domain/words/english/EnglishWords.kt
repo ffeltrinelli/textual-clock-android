@@ -1,9 +1,6 @@
-package ffeltrinelli.textualclock.domain.words
+package ffeltrinelli.textualclock.domain.words.english
 
-interface Word {
-    fun text(): String
-    fun length(): Int = text().length
-}
+import ffeltrinelli.textualclock.domain.words.Word
 
 enum class Connector(private val text: String): Word {
     IT_IS("it's"),

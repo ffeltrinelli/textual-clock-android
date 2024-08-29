@@ -1,6 +1,7 @@
 package ffeltrinelli.textualclock.domain.words
 
 import ffeltrinelli.textualclock.domain.RandomGenerator
+import ffeltrinelli.textualclock.domain.words.english.Filler
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
