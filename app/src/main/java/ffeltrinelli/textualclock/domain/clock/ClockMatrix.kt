@@ -8,5 +8,8 @@ abstract class ClockMatrix(
     // TODO check all rows have same length or throw
     val rows: List<WordsRow>
 ) {
-    val rowsLength = rows.first().length
+    /**
+     * Number of characters in each row.
+     */
+    val rowLength = rows.first().length
 }

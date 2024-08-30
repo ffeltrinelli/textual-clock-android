@@ -4,7 +4,7 @@ import ffeltrinelli.textualclock.domain.RandomGenerator
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
@@ -22,7 +22,7 @@ class FillerTest {
 
         val result = underTest.text()
 
-        Assert.assertEquals("", result)
+        assertEquals("", result)
     }
 
     @Test
@@ -32,7 +32,7 @@ class FillerTest {
 
         val result = underTest.text()
 
-        Assert.assertEquals("x", result)
+        assertEquals("x", result)
     }
 
     @Test
@@ -42,6 +42,6 @@ class FillerTest {
 
         val result = underTest.text()
 
-        Assert.assertEquals("ab", result)
+        assertEquals("ab", result)
     }
 }

@@ -16,7 +16,7 @@ fun TextualClock(clockMatrix: ClockMatrix, modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(clockMatrix.rowsLength),
+            columns = GridCells.Fixed(clockMatrix.rowLength),
             modifier = modifier
         ) {
             clockMatrix.rows.forEach { row ->

@@ -29,10 +29,19 @@ class EnglishClock(generator: RandomGenerator): ClockMatrix(initEnglishWords(gen
                 row(Hour.TEN, Connector.O_CLOCK),
             )
 
-            // add filler elements so that all rows have the same length of the longest row
+            return normalizeLength(rows, generator)
+        }
+
+        /**
+         * Add filler characters so that all rows have the same length of the longest row
+         */
+        private fun normalizeLength(rows: List<WordsRow>, generator: RandomGenerator): List<WordsRow> {
             val maxRowLength = rows.maxOf { it.length }
             val normalizedRows: List<WordsRow> = rows.map { row ->
-                if (row.length < maxRowLength) row.addFillers(maxRowLength-row.length, generator) else row
+                if (row.length < maxRowLength) row.addFillers(
+                    maxRowLength - row.length,
+                    generator
+                ) else row
             }
             return normalizedRows
         }
@@ -44,7 +53,7 @@ class EnglishClock(generator: RandomGenerator): ClockMatrix(initEnglishWords(gen
 }
 
 /**
- * Add filler elements of the given length to this row.
+ * Add filler characters of the given length to this row.
  */
 fun WordsRow.addFillers(length: Int, generator: RandomGenerator): WordsRow {
     // TODO distribute filler length between row's words randomly

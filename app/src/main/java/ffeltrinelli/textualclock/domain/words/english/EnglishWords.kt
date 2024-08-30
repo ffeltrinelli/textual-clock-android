@@ -37,3 +37,8 @@ enum class Hour(private val text: String): Word {
 
     override fun text() = text
 }
+
+/**
+ * List with all English words.
+ */
+val ENGLISH_WORDS: List<Word> = Connector.entries + Minutes.entries + Hour.entries

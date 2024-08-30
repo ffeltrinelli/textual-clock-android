@@ -7,7 +7,7 @@ import ffeltrinelli.textualclock.domain.words.Word
  */
 data class WordsRow(val words: List<Word>) {
     /**
-     * Sum of the length of all the words of this row.
+     * Total number of characters in this row.
      */
     val length = words.sumOf { it.length() }
 
