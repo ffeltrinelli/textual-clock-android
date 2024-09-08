@@ -7,16 +7,21 @@ import ffeltrinelli.textualclock.domain.words.Word
  * All rows must have the same characters length.
  */
 abstract class ClockMatrix(
-    // TODO check all rows have same length or throw
     val rows: List<WordsRow>
 ) {
+    init {
+        require(rows.isNotEmpty()) { "clock cannot contain no rows" }
+        require(rows.all { it.length == rows.first().length }) { "all rows must have the same length" }
+    }
+
     /**
      * Number of characters in each row.
      */
     val rowLength = rows.first().length
 
     /**
-     * Flattened list of all words from all rows.
+     * Flattened list of all words from all rows, in row order.
+     * Can contain duplicates.
      */
     val words: List<Word> = rows.flatMap { it.words }
 }
