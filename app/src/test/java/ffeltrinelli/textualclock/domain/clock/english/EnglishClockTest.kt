@@ -4,6 +4,7 @@ import assertk.Assert
 import assertk.assertThat
 import assertk.assertions.each
 import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
 import assertk.assertions.isNotEmpty
 import assertk.assertions.prop
 import assertk.assertions.support.expected
@@ -13,6 +14,7 @@ import ffeltrinelli.textualclock.domain.clock.ClockMatrix
 import ffeltrinelli.textualclock.domain.clock.WordsRow
 import ffeltrinelli.textualclock.domain.words.Word
 import ffeltrinelli.textualclock.domain.words.english.ENGLISH_WORDS
+import ffeltrinelli.textualclock.domain.words.english.Filler
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -56,7 +58,10 @@ class EnglishClockTest {
 
     @Test
     fun `other than english words, all others are fillers`() {
-        // TODO
+        val nonEnglishWords = underTest.words.minus(ENGLISH_WORDS)
+        assertThat(nonEnglishWords).each {
+            it.isInstanceOf(Filler::class).prop(Word::text).isRepetitionOfCharacter(RANDOM_LETTER)
+        }
     }
 }
 
@@ -64,4 +69,9 @@ private fun Assert<ClockMatrix>.containsOnlyOnce(word: Word) = given { actual ->
     val wordOccurrences = actual.rows.sumOf { row -> row.words.filter { it == word }.size }
     if (wordOccurrences == 1) return
     expected("only one occurrence of ${show(word)} but found $wordOccurrences: ${show(actual.rows)}")
+}
+
+private fun Assert<String>.isRepetitionOfCharacter(char: Char) = given { actual ->
+    if (actual.isNotEmpty() && actual.all { it == char }) return
+    expected("a repetition of character ${show(char)} but found: ${show(actual)}")
 }
