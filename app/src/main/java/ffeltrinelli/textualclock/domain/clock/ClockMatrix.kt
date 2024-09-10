@@ -10,7 +10,7 @@ abstract class ClockMatrix(
     val rows: List<WordsRow>
 ) {
     init {
-        require(rows.isNotEmpty()) { "clock cannot contain no rows" }
+        require(rows.isNotEmpty()) { "clock cannot have zero rows" }
         require(rows.all { it.length == rows.first().length }) { "all rows must have the same length" }
     }
 
