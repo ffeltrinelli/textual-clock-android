@@ -1,5 +1,6 @@
 package ffeltrinelli.textualclock.ui.composable
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -11,10 +12,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CharCell(char: Char) {
+fun CharCell(char: Char, isHighlighted: Boolean) {
     val cellModifier = Modifier
         .padding(2.dp)
         .border(width = 2.dp, color = Color.Black)
+        .run { if (isHighlighted) background(Color.Yellow) else this }
     Text(
         text = char.toString(),
         modifier = cellModifier,

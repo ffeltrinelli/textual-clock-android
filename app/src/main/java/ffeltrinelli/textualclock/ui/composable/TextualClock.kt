@@ -21,8 +21,8 @@ fun TextualClock(clockMatrix: ClockMatrix, modifier: Modifier = Modifier) {
         ) {
             clockMatrix.rows.forEach { row ->
                 row.words.forEach { word ->
-                    word.text().forEach { char ->
-                        item { CharCell(char) }
+                    word.text.forEach { char ->
+                        item { CharCell(char, isHighlighted = word.isSelected) }
                     }
                 }
             }

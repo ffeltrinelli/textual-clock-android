@@ -5,14 +5,14 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import assertk.assertions.prop
-import ffeltrinelli.textualclock.domain.clock.WordsRow.Companion.row
+import ffeltrinelli.textualclock.domain.clock.ClockRow.Companion.row
 import ffeltrinelli.textualclock.domain.words.english.Connector.IT_IS
 import ffeltrinelli.textualclock.domain.words.english.Connector.PAST
 import org.junit.Test
 
-class WordsRowTest {
+class ClockRowTest {
 
-    private lateinit var underTest: WordsRow
+    private lateinit var underTest: ClockRow
 
     @Test
     fun `throws if no words`() {
@@ -24,6 +24,6 @@ class WordsRowTest {
     @Test
     fun `length is the total number of characters in the row`() {
         underTest = row(IT_IS, PAST)
-        assertThat(underTest).prop(WordsRow::length).isEqualTo(8)
+        assertThat(underTest).prop(ClockRow::length).isEqualTo(8)
     }
 }

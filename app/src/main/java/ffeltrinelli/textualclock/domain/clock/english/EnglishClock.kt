@@ -2,8 +2,8 @@ package ffeltrinelli.textualclock.domain.clock.english
 
 import ffeltrinelli.textualclock.domain.RandomGenerator
 import ffeltrinelli.textualclock.domain.clock.ClockMatrix
-import ffeltrinelli.textualclock.domain.clock.WordsRow
-import ffeltrinelli.textualclock.domain.clock.WordsRow.Companion.row
+import ffeltrinelli.textualclock.domain.clock.ClockRow
+import ffeltrinelli.textualclock.domain.clock.ClockRow.Companion.row
 import ffeltrinelli.textualclock.domain.words.english.Connector
 import ffeltrinelli.textualclock.domain.words.english.Filler
 import ffeltrinelli.textualclock.domain.words.english.Hour
@@ -15,8 +15,8 @@ import kotlin.random.Random
  */
 class EnglishClock(generator: RandomGenerator): ClockMatrix(initEnglishWords(generator)) {
     companion object {
-        fun initEnglishWords(generator: RandomGenerator): List<WordsRow> {
-            val rows: List<WordsRow> = listOf(
+        fun initEnglishWords(generator: RandomGenerator): List<ClockRow> {
+            val rows: List<ClockRow> = listOf(
                 row(Connector.IT_IS),
                 row(Minutes.QUARTER),
                 row(Minutes.TWENTY, Minutes.FIVE),
@@ -35,9 +35,9 @@ class EnglishClock(generator: RandomGenerator): ClockMatrix(initEnglishWords(gen
         /**
          * Add filler characters so that all rows have the same length of the longest row
          */
-        private fun normalizeLength(rows: List<WordsRow>, generator: RandomGenerator): List<WordsRow> {
+        private fun normalizeLength(rows: List<ClockRow>, generator: RandomGenerator): List<ClockRow> {
             val maxRowLength = rows.maxOf { it.length }
-            val normalizedRows: List<WordsRow> = rows.map { row ->
+            val normalizedRows: List<ClockRow> = rows.map { row ->
                 if (row.length < maxRowLength) row.addFillers(
                     maxRowLength - row.length,
                     generator
@@ -54,8 +54,9 @@ class EnglishClock(generator: RandomGenerator): ClockMatrix(initEnglishWords(gen
 
 /**
  * Add filler characters of the given length to this row.
+ * Filler characters are un-selected.
  */
-fun WordsRow.addFillers(length: Int, generator: RandomGenerator): WordsRow {
+fun ClockRow.addFillers(length: Int, generator: RandomGenerator): ClockRow {
     // TODO distribute filler length between row's words randomly
-    return WordsRow(words + Filler(length, generator))
+    return ClockRow(words + Filler(length, generator).toUnselected())
 }
