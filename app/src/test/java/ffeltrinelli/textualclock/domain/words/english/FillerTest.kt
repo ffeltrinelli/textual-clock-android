@@ -1,6 +1,6 @@
 package ffeltrinelli.textualclock.domain.words.english
 
-import ffeltrinelli.textualclock.domain.RandomGenerator
+import ffeltrinelli.textualclock.domain.Randomizer
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -14,11 +14,11 @@ class FillerTest {
     val mockkRule = MockKRule(this)
 
     @MockK
-    lateinit var generator: RandomGenerator
+    lateinit var randomizer: Randomizer
 
     @Test
     fun `empty string`() {
-        val underTest = Filler(length = 0, generator)
+        val underTest = Filler(length = 0, randomizer)
 
         val result = underTest.text()
 
@@ -27,8 +27,8 @@ class FillerTest {
 
     @Test
     fun `single-letter string`() {
-        every { generator.nextLetter() } returnsMany listOf('x')
-        val underTest = Filler(length = 1, generator)
+        every { randomizer.nextLetter() } returnsMany listOf('x')
+        val underTest = Filler(length = 1, randomizer)
 
         val result = underTest.text()
 
@@ -37,8 +37,8 @@ class FillerTest {
 
     @Test
     fun `multi-letters string`() {
-        every { generator.nextLetter() } returnsMany listOf('a', 'b')
-        val underTest = Filler(length = 2, generator)
+        every { randomizer.nextLetter() } returnsMany listOf('a', 'b')
+        val underTest = Filler(length = 2, randomizer)
 
         val result = underTest.text()
 

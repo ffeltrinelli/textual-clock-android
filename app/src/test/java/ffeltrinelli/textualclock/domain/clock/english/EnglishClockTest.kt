@@ -9,7 +9,7 @@ import assertk.assertions.isNotEmpty
 import assertk.assertions.prop
 import assertk.assertions.support.expected
 import assertk.assertions.support.show
-import ffeltrinelli.textualclock.domain.RandomGenerator
+import ffeltrinelli.textualclock.domain.Randomizer
 import ffeltrinelli.textualclock.domain.clock.ClockMatrix
 import ffeltrinelli.textualclock.domain.clock.ClockRow
 import ffeltrinelli.textualclock.domain.words.Word
@@ -31,7 +31,7 @@ class EnglishClockTest {
     val mockkRule = MockKRule(this)
 
     @MockK
-    private lateinit var generator: RandomGenerator
+    private lateinit var randomizer: Randomizer
 
     private lateinit var underTest: EnglishClock
 
@@ -41,8 +41,8 @@ class EnglishClockTest {
 
     @Before
     fun init() {
-        every { generator.nextLetter() } returns RANDOM_LETTER
-        underTest = EnglishClock(generator)
+        every { randomizer.nextLetter() } returns RANDOM_LETTER
+        underTest = EnglishClock(randomizer)
     }
 
     @Test

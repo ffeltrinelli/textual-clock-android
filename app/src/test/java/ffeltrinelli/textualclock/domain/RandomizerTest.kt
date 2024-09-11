@@ -10,18 +10,18 @@ import org.junit.Rule
 import org.junit.Test
 import kotlin.random.Random
 
-class RandomGeneratorTest {
+class RandomizerTest {
     @get:Rule
     val mockkRule = MockKRule(this)
 
     @MockK
     lateinit var random: Random
 
-    lateinit var underTest: RandomGenerator
+    lateinit var underTest: Randomizer
 
     @Before
     fun init() {
-        underTest = RandomGenerator(random)
+        underTest = Randomizer(random)
     }
 
     @Test
