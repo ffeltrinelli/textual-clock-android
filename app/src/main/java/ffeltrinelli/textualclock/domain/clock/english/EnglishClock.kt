@@ -13,7 +13,7 @@ import kotlin.random.Random
 /**
  * A textual clock with english words.
  */
-class EnglishClock(randomizer: Randomizer): ClockMatrix(initEnglishWords(randomizer)) {
+class EnglishClock(randomizer: Randomizer, englishTime: EnglishTime): ClockMatrix(generateWords(randomizer, englishTime)) {
     companion object {
         private val UNPROCESSED_ENGLISH_ROWS: List<ClockRow> = listOf(
             row(Connector.IT_IS),
@@ -29,10 +29,17 @@ class EnglishClock(randomizer: Randomizer): ClockMatrix(initEnglishWords(randomi
         )
         // TODO add Dependency Injection
         private val RANDOMIZER = Randomizer(Random)
-        val INSTANCE = EnglishClock(RANDOMIZER)
+        private val ENGLISH_TIME = EnglishTime()
+        val INSTANCE = EnglishClock(RANDOMIZER, ENGLISH_TIME)
 
-        fun initEnglishWords(randomizer: Randomizer): List<ClockRow> {
-            return normalizeLength(UNPROCESSED_ENGLISH_ROWS, randomizer)
+        fun generateWords(randomizer: Randomizer, englishTime: EnglishTime): List<ClockRow> {
+            val rows = selectWordsBasedOnTime(UNPROCESSED_ENGLISH_ROWS, englishTime)
+            return normalizeLength(rows, randomizer)
+        }
+
+        private fun selectWordsBasedOnTime(rows: List<ClockRow>, englishTime: EnglishTime): List<ClockRow> {
+            // TODO implement words selection logic
+            return rows
         }
 
         /**

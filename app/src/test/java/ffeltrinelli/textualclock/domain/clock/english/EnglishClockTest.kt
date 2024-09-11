@@ -33,6 +33,9 @@ class EnglishClockTest {
     @MockK
     private lateinit var randomizer: Randomizer
 
+    @MockK
+    private lateinit var englishTime: EnglishTime
+
     private lateinit var underTest: EnglishClock
 
     companion object {
@@ -42,7 +45,7 @@ class EnglishClockTest {
     @Before
     fun init() {
         every { randomizer.nextLetter() } returns RANDOM_LETTER
-        underTest = EnglishClock(randomizer)
+        underTest = EnglishClock(randomizer, englishTime)
     }
 
     @Test
