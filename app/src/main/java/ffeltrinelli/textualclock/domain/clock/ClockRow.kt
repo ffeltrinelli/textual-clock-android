@@ -17,6 +17,10 @@ data class ClockRow(val words: List<SelectableWord>) {
      */
     val length = words.sumOf { it.length }
 
+    fun selectWordsIn(wordsToSelect: List<Word>): ClockRow = ClockRow(
+        words.map { word -> word.updateSelection(word.value in wordsToSelect) }
+    )
+
     companion object {
         /**
          * Creates a row with the given words.

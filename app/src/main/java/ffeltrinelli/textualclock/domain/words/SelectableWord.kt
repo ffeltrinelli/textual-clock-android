@@ -9,4 +9,6 @@ data class SelectableWord(
 ) {
     val text = value.text()
     val length = value.length()
+
+    fun updateSelection(isSelected: Boolean) = SelectableWord(value, isSelected = isSelected)
 }

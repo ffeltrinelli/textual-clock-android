@@ -34,13 +34,14 @@ class EnglishClock(randomizer: Randomizer, englishTime: EnglishTime): ClockMatri
         val INSTANCE = EnglishClock(RANDOMIZER, ENGLISH_TIME)
 
         fun generateWords(randomizer: Randomizer, englishTime: EnglishTime): List<ClockRow> {
-            val rows = selectWordsBasedOnTime(UNPROCESSED_ENGLISH_ROWS, englishTime)
+            val rows = selectWordsBasedOnTime(englishTime)
             return normalizeLength(rows, randomizer)
         }
 
-        private fun selectWordsBasedOnTime(rows: List<ClockRow>, englishTime: EnglishTime): List<ClockRow> {
-            // TODO implement words selection logic
-            return rows
+        private fun selectWordsBasedOnTime(englishTime: EnglishTime): List<ClockRow> {
+            val currentTime = englishTime.currentTime()
+            val currentTimeWords = englishTime.convertToWords(currentTime)
+            return UNPROCESSED_ENGLISH_ROWS.map { it.selectWordsIn(currentTimeWords) }
         }
 
         /**
