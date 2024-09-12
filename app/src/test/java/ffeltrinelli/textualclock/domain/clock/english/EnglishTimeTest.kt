@@ -26,12 +26,26 @@ import junitparams.JUnitParamsRunner
 import junitparams.Parameters
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.time.Clock
+import java.time.Instant
 import java.time.LocalTime
+import java.time.ZoneOffset
 
 @RunWith(JUnitParamsRunner::class)
 class EnglishTimeTest {
 
-    private val underTest = EnglishTime()
+    companion object {
+        val NOW: Instant = Instant.parse("2024-09-12T10:00:00Z")
+        val TIME: LocalTime = LocalTime.ofInstant(NOW, ZoneOffset.UTC)
+    }
+
+    private val underTest = EnglishTime(Clock.fixed(NOW, ZoneOffset.UTC))
+
+    @Test
+    fun `returns current time from clock`() {
+        val result = underTest.currentTime()
+        assertThat(result).isEqualTo(TIME)
+    }
 
     @Test
     @Parameters(method = "timeToWordsExamples")

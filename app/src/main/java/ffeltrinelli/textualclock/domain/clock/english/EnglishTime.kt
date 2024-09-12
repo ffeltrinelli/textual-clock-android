@@ -10,15 +10,16 @@ import ffeltrinelli.textualclock.domain.words.english.Minutes
 import ffeltrinelli.textualclock.domain.words.english.Minutes.HALF
 import ffeltrinelli.textualclock.domain.words.english.Minutes.QUARTER
 import ffeltrinelli.textualclock.domain.words.english.Minutes.TWENTY
+import java.time.Clock
 import java.time.LocalTime
 import java.time.temporal.ChronoField
 
 /**
  * Helper to represent time as text in english.
  */
-class EnglishTime {
+class EnglishTime(private val clock: Clock) {
 
-    fun currentTime(): LocalTime = LocalTime.now()
+    fun currentTime(): LocalTime = LocalTime.now(clock)
 
     fun convertToWords(time: LocalTime): List<Word> {
         val amPmHour = time.get(ChronoField.CLOCK_HOUR_OF_AMPM)
