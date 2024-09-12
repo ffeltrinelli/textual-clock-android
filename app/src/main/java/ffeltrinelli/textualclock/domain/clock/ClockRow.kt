@@ -17,6 +17,12 @@ data class ClockRow(val words: List<SelectableWord>) {
      */
     val length = words.sumOf { it.length }
 
+    /**
+     * Builds a new row that is a copy of this one, in which
+     * the row's words that are contained in the given selection list
+     * are selected and the others aren't. Words that are not in the row
+     * are ignored.
+     */
     fun selectWordsIn(wordsToSelect: List<Word>): ClockRow = ClockRow(
         words.map { word -> word.updateSelection(word.value in wordsToSelect) }
     )
