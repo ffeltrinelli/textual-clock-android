@@ -4,6 +4,7 @@ assertk = "0.28.1"
 kotlin = "2.0.20"
 coreKtx = "1.13.1"
 junit = "4.13.2"
+junitParams = "1.1.1"
 junitVersion = "1.2.1"
 mockk = "1.13.12"
 espressoCore = "3.6.1"
@@ -14,6 +15,7 @@ composeBom = "2024.08.00"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
+junitParams = { group = "pl.pragmatists", name = "JUnitParams", version.ref = "junitParams" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }

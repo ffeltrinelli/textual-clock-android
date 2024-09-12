@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     testImplementation(libs.junit)
+    testImplementation(libs.junitParams)
     testImplementation(libs.mockk)
     testImplementation(libs.assertk)
     androidTestImplementation(libs.androidx.junit)
