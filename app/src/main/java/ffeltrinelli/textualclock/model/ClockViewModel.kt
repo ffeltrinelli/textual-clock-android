@@ -26,9 +26,9 @@ class ClockViewModel: ViewModel() {
     private fun startClockTick() {
         viewModelScope.launch {
             while (coroutineContext.isActive) {
-                delay(ONE_MINUTE)
                 println("Updating clock")
                 clockState.value = rebuildClock()
+                delay(ONE_MINUTE)
             }
         }
     }
