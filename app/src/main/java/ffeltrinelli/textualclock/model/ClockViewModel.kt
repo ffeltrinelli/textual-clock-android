@@ -36,7 +36,7 @@ class ClockViewModel: ViewModel() {
     companion object {
         private const val ONE_MINUTE = 1000L * 60
 
-        // TODO add Dependency Injection
+        // TODO add Dependency Injection (DI)
         private val RANDOMIZER = Randomizer(Random)
         private val ENGLISH_TIME = EnglishTime(Clock.systemDefaultZone())
 
