@@ -10,7 +10,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import ffeltrinelli.textualclock.domain.clock.english.EnglishClock
 import ffeltrinelli.textualclock.ui.composable.TextualClock
 import ffeltrinelli.textualclock.ui.theme.TextualClockTheme
 
@@ -21,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TextualClockTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TextualClock(EnglishClock.INSTANCE, Modifier.padding(innerPadding))
+                    TextualClock(Modifier.padding(innerPadding))
                 }
             }
         }
@@ -32,6 +31,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TextualClockPreview() {
     TextualClockTheme {
-        TextualClock(EnglishClock.INSTANCE)
+        TextualClock()
     }
 }

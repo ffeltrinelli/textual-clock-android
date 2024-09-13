@@ -8,8 +8,6 @@ import ffeltrinelli.textualclock.domain.words.english.Connector
 import ffeltrinelli.textualclock.domain.words.english.Filler
 import ffeltrinelli.textualclock.domain.words.english.Hour
 import ffeltrinelli.textualclock.domain.words.english.Minutes
-import java.time.Clock
-import kotlin.random.Random
 
 /**
  * A textual clock with english words.
@@ -28,10 +26,6 @@ class EnglishClock(randomizer: Randomizer, englishTime: EnglishTime): ClockMatri
             row(Hour.SEVEN, Hour.TWELVE),
             row(Hour.TEN, Connector.O_CLOCK),
         )
-        // TODO add Dependency Injection
-        private val RANDOMIZER = Randomizer(Random)
-        private val ENGLISH_TIME = EnglishTime(Clock.systemDefaultZone())
-        val INSTANCE = EnglishClock(RANDOMIZER, ENGLISH_TIME)
 
         fun generateWords(randomizer: Randomizer, englishTime: EnglishTime): List<ClockRow> {
             val rows = selectWordsBasedOnTime(englishTime)
