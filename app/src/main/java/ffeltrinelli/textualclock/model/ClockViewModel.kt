@@ -40,6 +40,9 @@ class ClockViewModel: ViewModel() {
         private val RANDOMIZER = Randomizer(Random)
         private val ENGLISH_TIME = EnglishTime(Clock.systemDefaultZone())
 
-        private fun rebuildClock(): ClockMatrix = EnglishClock(RANDOMIZER, ENGLISH_TIME)
+        // TODO add app configuration for this
+        private const val WORDS_PER_ROW = 2
+
+        private fun rebuildClock(): ClockMatrix = EnglishClock(RANDOMIZER, ENGLISH_TIME, WORDS_PER_ROW)
     }
 }

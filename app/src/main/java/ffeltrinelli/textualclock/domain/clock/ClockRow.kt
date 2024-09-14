@@ -32,6 +32,6 @@ data class ClockRow(val words: List<SelectableWord>) {
          * Creates a row with the given words.
          * All the words are un-selected.
          */
-        fun row(vararg words: Word) = ClockRow(words.map { it.toUnselected() })
+        fun unselectedRowFrom(words: List<Word>) = ClockRow(words.map { it.toUnselected() })
     }
 }

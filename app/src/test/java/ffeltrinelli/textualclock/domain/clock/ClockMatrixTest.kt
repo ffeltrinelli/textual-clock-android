@@ -5,7 +5,7 @@ import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isInstanceOf
 import assertk.assertions.prop
-import ffeltrinelli.textualclock.domain.clock.ClockRow.Companion.row
+import ffeltrinelli.textualclock.domain.clock.ClockRow.Companion.unselectedRowFrom
 import ffeltrinelli.textualclock.domain.words.english.Connector.IT_IS
 import ffeltrinelli.textualclock.domain.words.english.Connector.PAST
 import ffeltrinelli.textualclock.domain.words.english.Connector.TO
@@ -25,8 +25,8 @@ class ClockMatrixTest {
     @Test
     fun `throws if rows with different length`() {
         val rows = listOf(
-            row(IT_IS),
-            row(PAST, TO)
+            unselectedRowFrom(listOf(IT_IS)),
+            unselectedRowFrom(listOf(PAST, TO))
         )
         assertFailure {
             underTest = FakeClock(rows)
@@ -36,8 +36,8 @@ class ClockMatrixTest {
     @Test
     fun `rowLength is the sum of characters in all rows`() {
         val rows = listOf(
-            row(IT_IS),
-            row(PAST)
+            unselectedRowFrom(listOf(IT_IS)),
+            unselectedRowFrom(listOf(PAST))
         )
         underTest = FakeClock(rows)
         assertThat(underTest).prop(ClockMatrix::rowLength).isEqualTo(4)

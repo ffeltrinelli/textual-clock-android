@@ -13,13 +13,11 @@ import assertk.assertions.support.show
 import ffeltrinelli.textualclock.domain.Randomizer
 import ffeltrinelli.textualclock.domain.clock.ClockMatrix
 import ffeltrinelli.textualclock.domain.clock.ClockRow
+import ffeltrinelli.textualclock.domain.clock.english.EnglishClock.Companion.ENGLISH_WORDS_ORDERED
 import ffeltrinelli.textualclock.domain.words.SelectableWord
 import ffeltrinelli.textualclock.domain.words.Word
-import ffeltrinelli.textualclock.domain.words.english.Connector
 import ffeltrinelli.textualclock.domain.words.english.Connector.IT_IS
 import ffeltrinelli.textualclock.domain.words.english.Filler
-import ffeltrinelli.textualclock.domain.words.english.Hour
-import ffeltrinelli.textualclock.domain.words.english.Minutes
 import ffeltrinelli.textualclock.domain.words.english.Minutes.FIVE
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -44,9 +42,9 @@ class EnglishClockTest {
     private lateinit var underTest: EnglishClock
 
     companion object {
-        private val ENGLISH_WORDS: List<Word> = Connector.entries + Minutes.entries + Hour.entries
         private val CURRENT_TIME = LocalTime.parse("12:10")
         private val CURRENT_TIME_WORDS: List<Word> = listOf(IT_IS, FIVE)
+        private const val WORDS_PER_ROW = 2
     }
 
     @Before
@@ -54,7 +52,7 @@ class EnglishClockTest {
         every { randomizer.nextLetter() } returns RANDOM_LETTER
         every { englishTime.currentTime() } returns CURRENT_TIME
         every { englishTime.convertToWords(CURRENT_TIME) } returns CURRENT_TIME_WORDS
-        underTest = EnglishClock(randomizer, englishTime)
+        underTest = EnglishClock(randomizer, englishTime, WORDS_PER_ROW)
     }
 
     @Test
@@ -69,14 +67,14 @@ class EnglishClockTest {
 
     @Test
     fun `contains each english word only once`() {
-        ENGLISH_WORDS.forEach { word ->
+        ENGLISH_WORDS_ORDERED.forEach { word ->
             assertThat(underTest).containsOnlyOnce(word)
         }
     }
 
     @Test
     fun `other than english words, all others are fillers`() {
-        val nonEnglishWords = underTest.allWords().map { it.value }.minus(ENGLISH_WORDS)
+        val nonEnglishWords = underTest.allWords().map { it.value }.minus(ENGLISH_WORDS_ORDERED)
         assertThat(nonEnglishWords).each {
             it.isInstanceOf(Filler::class).prop(Word::text).isRepetitionOfCharacter(RANDOM_LETTER)
         }

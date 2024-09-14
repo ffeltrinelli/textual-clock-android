@@ -3,7 +3,8 @@ package ffeltrinelli.textualclock.domain.clock.english
 import ffeltrinelli.textualclock.domain.Randomizer
 import ffeltrinelli.textualclock.domain.clock.ClockMatrix
 import ffeltrinelli.textualclock.domain.clock.ClockRow
-import ffeltrinelli.textualclock.domain.clock.ClockRow.Companion.row
+import ffeltrinelli.textualclock.domain.clock.ClockRow.Companion.unselectedRowFrom
+import ffeltrinelli.textualclock.domain.words.Word
 import ffeltrinelli.textualclock.domain.words.english.Connector
 import ffeltrinelli.textualclock.domain.words.english.Filler
 import ffeltrinelli.textualclock.domain.words.english.Hour
@@ -12,30 +13,36 @@ import ffeltrinelli.textualclock.domain.words.english.Minutes
 /**
  * A textual clock with english words.
  */
-class EnglishClock(randomizer: Randomizer, englishTime: EnglishTime): ClockMatrix(generateWords(randomizer, englishTime)) {
+class EnglishClock(randomizer: Randomizer, englishTime: EnglishTime, wordsPerRoW: Int) :
+    ClockMatrix(generateWords(randomizer, englishTime, wordsPerRoW)) {
     companion object {
-        private val UNPROCESSED_ENGLISH_ROWS: List<ClockRow> = listOf(
-            row(Connector.IT_IS),
-            row(Minutes.QUARTER),
-            row(Minutes.TWENTY, Minutes.FIVE),
-            row(Minutes.HALF, Minutes.TEN, Connector.TO),
-            row(Connector.PAST, Hour.NINE),
-            row(Hour.ONE, Hour.SIX, Hour.THREE),
-            row(Hour.FOUR, Hour.FIVE, Hour.TWO),
-            row(Hour.EIGHT, Hour.ELEVEN),
-            row(Hour.SEVEN, Hour.TWELVE),
-            row(Hour.TEN, Connector.O_CLOCK),
+        /**
+         * All english words ordered in a way that
+         * they can form meaningful sentences regarding time.
+         */
+        val ENGLISH_WORDS_ORDERED: List<Word> = listOf(
+            Connector.IT_IS, Minutes.QUARTER, Minutes.TWENTY, Minutes.FIVE,
+            Minutes.HALF, Minutes.TEN, Connector.TO, Connector.PAST, Hour.NINE,
+            Hour.ONE, Hour.SIX, Hour.THREE, Hour.FOUR, Hour.FIVE, Hour.TWO,
+            Hour.EIGHT, Hour.ELEVEN, Hour.SEVEN, Hour.TWELVE,
+            Hour.TEN, Connector.O_CLOCK
         )
 
-        fun generateWords(randomizer: Randomizer, englishTime: EnglishTime): List<ClockRow> {
-            val rows = selectWordsBasedOnTime(englishTime)
+        fun generateWords(randomizer: Randomizer, englishTime: EnglishTime, wordsPerRoW: Int): List<ClockRow> {
+            var rows = chunkWordsIntoRows(wordsPerRoW)
+            rows = selectWordsBasedOnTime(rows, englishTime)
             return normalizeLength(rows, randomizer)
         }
 
-        private fun selectWordsBasedOnTime(englishTime: EnglishTime): List<ClockRow> {
+        private fun chunkWordsIntoRows(wordsPerRow: Int): List<ClockRow> =
+            ENGLISH_WORDS_ORDERED.chunked(wordsPerRow) { wordsInRow ->
+                unselectedRowFrom(wordsInRow)
+            }
+
+        private fun selectWordsBasedOnTime(rows: List<ClockRow>, englishTime: EnglishTime): List<ClockRow> {
             val currentTime = englishTime.currentTime()
             val currentTimeWords = englishTime.convertToWords(currentTime)
-            return UNPROCESSED_ENGLISH_ROWS.map { it.selectWordsIn(currentTimeWords) }
+            return rows.map { it.selectWordsIn(currentTimeWords) }
         }
 
         /**
