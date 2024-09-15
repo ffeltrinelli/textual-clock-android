@@ -13,11 +13,14 @@ import ffeltrinelli.textualclock.domain.words.english.Minutes.TWENTY
 import java.time.Clock
 import java.time.LocalTime
 import java.time.temporal.ChronoField
+import javax.inject.Inject
 
 /**
  * Helper to represent time as text in english.
  */
-class EnglishTime(private val clock: Clock) {
+class EnglishTime @Inject constructor(
+    private val clock: Clock
+) {
 
     fun currentTime(): LocalTime = LocalTime.now(clock)
 

@@ -4,20 +4,24 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ffeltrinelli.textualclock.domain.Randomizer
-import ffeltrinelli.textualclock.domain.clock.ClockMatrix
+import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.english.EnglishClock
 import ffeltrinelli.textualclock.domain.clock.english.EnglishTime
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import java.time.Clock
-import kotlin.random.Random
+import javax.inject.Inject
 
-class ClockViewModel: ViewModel() {
+@HiltViewModel
+class ClockViewModel @Inject constructor(
+    private val randomizer: Randomizer,
+    private val englishTime: EnglishTime
+): ViewModel() {
     private val clockState = mutableStateOf(rebuildClock())
 
-    fun state(): State<ClockMatrix> = clockState
+    fun state(): State<TextualClock> = clockState
 
     init {
         startClockTick()
@@ -33,16 +37,12 @@ class ClockViewModel: ViewModel() {
         }
     }
 
+    private fun rebuildClock(): TextualClock = EnglishClock(randomizer, englishTime, WORDS_PER_ROW)
+
     companion object {
         private const val ONE_MINUTE = 1000L * 60
 
-        // TODO add Dependency Injection (DI)
-        private val RANDOMIZER = Randomizer(Random)
-        private val ENGLISH_TIME = EnglishTime(Clock.systemDefaultZone())
-
         // TODO add app configuration for this
         private const val WORDS_PER_ROW = 2
-
-        private fun rebuildClock(): ClockMatrix = EnglishClock(RANDOMIZER, ENGLISH_TIME, WORDS_PER_ROW)
     }
 }

@@ -1,7 +1,7 @@
 package ffeltrinelli.textualclock.domain.clock.english
 
 import ffeltrinelli.textualclock.domain.Randomizer
-import ffeltrinelli.textualclock.domain.clock.ClockMatrix
+import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.ClockRow
 import ffeltrinelli.textualclock.domain.clock.ClockRow.Companion.unselectedRowFrom
 import ffeltrinelli.textualclock.domain.words.Word
@@ -14,7 +14,7 @@ import ffeltrinelli.textualclock.domain.words.english.Minutes
  * A textual clock with english words.
  */
 class EnglishClock(randomizer: Randomizer, englishTime: EnglishTime, wordsPerRoW: Int) :
-    ClockMatrix(generateWords(randomizer, englishTime, wordsPerRoW)) {
+    TextualClock(generateWords(randomizer, englishTime, wordsPerRoW)) {
     companion object {
         /**
          * All english words ordered in a way that

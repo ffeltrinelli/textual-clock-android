@@ -13,9 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
-import ffeltrinelli.textualclock.ui.composable.TextualClock
+import dagger.hilt.android.AndroidEntryPoint
+import ffeltrinelli.textualclock.ui.composable.ClockGrid
 import ffeltrinelli.textualclock.ui.theme.TextualClockTheme
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +26,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             TextualClockTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TextualClock(Modifier.padding(innerPadding))
+                    ClockGrid(Modifier.padding(innerPadding))
                 }
             }
         }
@@ -49,6 +51,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TextualClockPreview() {
     TextualClockTheme {
-        TextualClock()
+        ClockGrid()
     }
 }

@@ -11,9 +11,9 @@ import ffeltrinelli.textualclock.domain.words.english.Connector.PAST
 import ffeltrinelli.textualclock.domain.words.english.Connector.TO
 import org.junit.Test
 
-class ClockMatrixTest {
+class TextualClockTest {
 
-    private lateinit var underTest: ClockMatrix
+    private lateinit var underTest: TextualClock
 
     @Test
     fun `throws if no rows`() {
@@ -40,8 +40,8 @@ class ClockMatrixTest {
             unselectedRowFrom(listOf(PAST))
         )
         underTest = FakeClock(rows)
-        assertThat(underTest).prop(ClockMatrix::rowLength).isEqualTo(4)
+        assertThat(underTest).prop(TextualClock::rowLength).isEqualTo(4)
     }
 
-    class FakeClock(rows: List<ClockRow>) : ClockMatrix(rows)
+    class FakeClock(rows: List<ClockRow>) : TextualClock(rows)
 }

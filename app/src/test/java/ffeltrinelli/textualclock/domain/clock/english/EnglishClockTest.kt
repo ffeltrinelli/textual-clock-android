@@ -11,7 +11,7 @@ import assertk.assertions.prop
 import assertk.assertions.support.expected
 import assertk.assertions.support.show
 import ffeltrinelli.textualclock.domain.Randomizer
-import ffeltrinelli.textualclock.domain.clock.ClockMatrix
+import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.ClockRow
 import ffeltrinelli.textualclock.domain.clock.english.EnglishClock.Companion.ENGLISH_WORDS_ORDERED
 import ffeltrinelli.textualclock.domain.words.SelectableWord
@@ -88,7 +88,7 @@ class EnglishClockTest {
     }
 }
 
-private fun Assert<ClockMatrix>.containsOnlyOnce(word: Word) = given { actual ->
+private fun Assert<TextualClock>.containsOnlyOnce(word: Word) = given { actual ->
     val wordOccurrences = actual.rows.sumOf { row -> row.words.filter { it.value == word }.size }
     if (wordOccurrences == 1) return
     expected("only one occurrence of ${show(word)} but found $wordOccurrences: ${show(actual.rows)}")
@@ -99,4 +99,4 @@ private fun Assert<String>.isRepetitionOfCharacter(char: Char) = given { actual 
     expected("a repetition of character ${show(char)} but found: ${show(actual)}")
 }
 
-private fun ClockMatrix.allWords(): List<SelectableWord> = rows.flatMap { row -> row.words }
+private fun TextualClock.allWords(): List<SelectableWord> = rows.flatMap { row -> row.words }

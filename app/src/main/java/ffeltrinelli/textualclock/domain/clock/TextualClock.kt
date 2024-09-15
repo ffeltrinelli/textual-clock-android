@@ -1,10 +1,10 @@
 package ffeltrinelli.textualclock.domain.clock
 
 /**
- * A clock made of a matrix of words.
+ * A textual clock made of rows of words.
  * All rows must have the same characters length.
  */
-abstract class ClockMatrix(
+abstract class TextualClock(
     val rows: List<ClockRow>
 ) {
     init {
