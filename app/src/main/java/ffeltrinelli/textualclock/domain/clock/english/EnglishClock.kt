@@ -1,6 +1,7 @@
 package ffeltrinelli.textualclock.domain.clock.english
 
 import ffeltrinelli.textualclock.domain.Randomizer
+import ffeltrinelli.textualclock.domain.clock.ClockConfig
 import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.ClockRow
 import ffeltrinelli.textualclock.domain.clock.ClockRow.Companion.unselectedRowFrom
@@ -18,8 +19,8 @@ class EnglishClock private constructor(
     rows: List<ClockRow>
 ) : TextualClock(rows) {
 
-    constructor(randomizer: Randomizer, englishTime: EnglishTime, wordsPerRoW: Int) : this(
-        englishTime, generateWords(randomizer, englishTime, wordsPerRoW)
+    constructor(randomizer: Randomizer, englishTime: EnglishTime, clockConfig: ClockConfig) : this(
+        englishTime, generateWords(randomizer, englishTime, clockConfig)
     )
 
     /**
@@ -41,8 +42,8 @@ class EnglishClock private constructor(
             Hour.TEN, Connector.O_CLOCK
         )
 
-        fun generateWords(randomizer: Randomizer, englishTime: EnglishTime, wordsPerRoW: Int): List<ClockRow> {
-            var rows = chunkWordsIntoRows(wordsPerRoW)
+        fun generateWords(randomizer: Randomizer, englishTime: EnglishTime, clockConfig: ClockConfig): List<ClockRow> {
+            var rows = chunkWordsIntoRows(clockConfig.wordsPerRoW)
             rows = normalizeLength(rows, randomizer)
             return selectWordsBasedOnTime(rows, englishTime)
         }

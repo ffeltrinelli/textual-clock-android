@@ -11,6 +11,7 @@ import assertk.assertions.prop
 import assertk.assertions.support.expected
 import assertk.assertions.support.show
 import ffeltrinelli.textualclock.domain.Randomizer
+import ffeltrinelli.textualclock.domain.clock.ClockConfig
 import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.ClockRow
 import ffeltrinelli.textualclock.domain.clock.english.EnglishClock.Companion.ENGLISH_WORDS_ORDERED
@@ -54,7 +55,7 @@ class EnglishClockTest {
         every { randomizer.nextLetter() } returns RANDOM_LETTER
         every { englishTime.currentTime() } returns CURRENT_TIME
         every { englishTime.convertToWords(CURRENT_TIME) } returns CURRENT_TIME_WORDS
-        underTest = EnglishClock(randomizer, englishTime, WORDS_PER_ROW)
+        underTest = EnglishClock(randomizer, englishTime, ClockConfig(WORDS_PER_ROW))
     }
 
     @Test
