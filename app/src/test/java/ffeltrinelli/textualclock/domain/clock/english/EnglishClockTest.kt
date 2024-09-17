@@ -19,6 +19,7 @@ import ffeltrinelli.textualclock.domain.words.Word
 import ffeltrinelli.textualclock.domain.words.english.Connector.IT_IS
 import ffeltrinelli.textualclock.domain.words.english.Filler
 import ffeltrinelli.textualclock.domain.words.english.Minutes.FIVE
+import ffeltrinelli.textualclock.domain.words.english.Minutes.TEN
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
@@ -44,6 +45,7 @@ class EnglishClockTest {
     companion object {
         private val CURRENT_TIME = LocalTime.parse("12:10")
         private val CURRENT_TIME_WORDS: List<Word> = listOf(IT_IS, FIVE)
+        private val CURRENT_TIME_WORDS_2: List<Word> = listOf(TEN)
         private const val WORDS_PER_ROW = 2
     }
 
@@ -84,6 +86,19 @@ class EnglishClockTest {
     fun `all current time words are selected, the others are not`() {
         assertThat(underTest.allWords()).each { it.matchesPredicate { word ->
             word.isSelected == word.value in CURRENT_TIME_WORDS
+        } }
+    }
+
+    @Test
+    fun `when selection is updated words are the same but selection changes`() {
+        val copyOfPreviousWords = underTest.allWords()
+        every { englishTime.convertToWords(CURRENT_TIME) } returns CURRENT_TIME_WORDS_2
+
+        val newWordsAfterSelectionUpdate = underTest.updateWordsSelection().allWords()
+
+        assertThat(copyOfPreviousWords.map { it.value }).isEqualTo(newWordsAfterSelectionUpdate.map { it.value })
+        assertThat(newWordsAfterSelectionUpdate).each { it.matchesPredicate { word ->
+            word.isSelected == word.value in CURRENT_TIME_WORDS_2
         } }
     }
 }

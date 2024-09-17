@@ -19,7 +19,7 @@ class ClockViewModel @Inject constructor(
     private val randomizer: Randomizer,
     private val englishTime: EnglishTime
 ): ViewModel() {
-    private val clockState = mutableStateOf(rebuildClock())
+    private val clockState = mutableStateOf(EnglishClock(randomizer, englishTime, WORDS_PER_ROW))
 
     fun state(): State<TextualClock> = clockState
 
@@ -31,13 +31,11 @@ class ClockViewModel @Inject constructor(
         viewModelScope.launch {
             while (coroutineContext.isActive) {
                 println("Updating clock")
-                clockState.value = rebuildClock()
+                clockState.value = clockState.value.updateWordsSelection()
                 delay(ONE_MINUTE)
             }
         }
     }
-
-    private fun rebuildClock(): TextualClock = EnglishClock(randomizer, englishTime, WORDS_PER_ROW)
 
     companion object {
         private const val ONE_MINUTE = 1000L * 60

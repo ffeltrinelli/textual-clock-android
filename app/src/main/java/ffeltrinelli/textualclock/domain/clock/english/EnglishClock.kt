@@ -13,8 +13,21 @@ import ffeltrinelli.textualclock.domain.words.english.Minutes
 /**
  * A textual clock with english words.
  */
-class EnglishClock(randomizer: Randomizer, englishTime: EnglishTime, wordsPerRoW: Int) :
-    TextualClock(generateWords(randomizer, englishTime, wordsPerRoW)) {
+class EnglishClock private constructor(
+    private val englishTime: EnglishTime,
+    rows: List<ClockRow>
+) : TextualClock(rows) {
+
+    constructor(randomizer: Randomizer, englishTime: EnglishTime, wordsPerRoW: Int) : this(
+        englishTime, generateWords(randomizer, englishTime, wordsPerRoW)
+    )
+
+    /**
+     * Builds a new instance where the words are the same but selected
+     * based on current time.
+     */
+    fun updateWordsSelection(): EnglishClock = EnglishClock(englishTime, selectWordsBasedOnTime(rows, englishTime))
+
     companion object {
         /**
          * All english words ordered in a way that
@@ -30,20 +43,14 @@ class EnglishClock(randomizer: Randomizer, englishTime: EnglishTime, wordsPerRoW
 
         fun generateWords(randomizer: Randomizer, englishTime: EnglishTime, wordsPerRoW: Int): List<ClockRow> {
             var rows = chunkWordsIntoRows(wordsPerRoW)
-            rows = selectWordsBasedOnTime(rows, englishTime)
-            return normalizeLength(rows, randomizer)
+            rows = normalizeLength(rows, randomizer)
+            return selectWordsBasedOnTime(rows, englishTime)
         }
 
         private fun chunkWordsIntoRows(wordsPerRow: Int): List<ClockRow> =
             ENGLISH_WORDS_ORDERED.chunked(wordsPerRow) { wordsInRow ->
                 unselectedRowFrom(wordsInRow)
             }
-
-        private fun selectWordsBasedOnTime(rows: List<ClockRow>, englishTime: EnglishTime): List<ClockRow> {
-            val currentTime = englishTime.currentTime()
-            val currentTimeWords = englishTime.convertToWords(currentTime)
-            return rows.map { it.selectWordsIn(currentTimeWords) }
-        }
 
         /**
          * Add filler characters so that all rows have the same length of the longest row
@@ -57,6 +64,12 @@ class EnglishClock(randomizer: Randomizer, englishTime: EnglishTime, wordsPerRoW
                 ) else row
             }
             return normalizedRows
+        }
+
+        private fun selectWordsBasedOnTime(rows: List<ClockRow>, englishTime: EnglishTime): List<ClockRow> {
+            val currentTime = englishTime.currentTime()
+            val currentTimeWords = englishTime.convertToWords(currentTime)
+            return rows.map { it.selectWordsIn(currentTimeWords) }
         }
     }
 }
