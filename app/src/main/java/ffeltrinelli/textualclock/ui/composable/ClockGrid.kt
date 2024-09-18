@@ -1,5 +1,6 @@
 package ffeltrinelli.textualclock.ui.composable
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -11,12 +12,13 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.model.ClockViewModel
+import ffeltrinelli.textualclock.ui.theme.BlueLight
 
 @Composable
 fun ClockGrid(modifier: Modifier = Modifier, clockViewModel: ClockViewModel = viewModel()) {
     val textualClock: TextualClock by clockViewModel.state()
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().background(BlueLight),
         contentAlignment = Alignment.Center
     ) {
         LazyVerticalGrid(
@@ -26,7 +28,7 @@ fun ClockGrid(modifier: Modifier = Modifier, clockViewModel: ClockViewModel = vi
             textualClock.rows.forEach { row ->
                 row.words.forEach { word ->
                     word.text.forEach { char ->
-                        item { CharCell(char, isHighlighted = word.isSelected) }
+                        item { CharCell(char.uppercaseChar(), isHighlighted = word.isSelected) }
                     }
                 }
             }

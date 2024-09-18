@@ -1,25 +1,19 @@
 package ffeltrinelli.textualclock.ui.composable
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ffeltrinelli.textualclock.ui.theme.GreyLight
 
 @Composable
 fun CharCell(char: Char, isHighlighted: Boolean) {
-    val cellModifier = Modifier
-        .padding(2.dp)
-        .border(width = 2.dp, color = Color.Black)
-        .run { if (isHighlighted) background(Color.Yellow) else this }
     Text(
         text = char.toString(),
-        modifier = cellModifier,
+        color = if (isHighlighted) Color.White else GreyLight,
+        fontWeight = if (isHighlighted) FontWeight.Medium else FontWeight.Normal,
         fontSize = 30.sp,
         textAlign = TextAlign.Center
     )
