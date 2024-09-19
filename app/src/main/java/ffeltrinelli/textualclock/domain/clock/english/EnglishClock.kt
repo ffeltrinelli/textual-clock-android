@@ -34,8 +34,8 @@ class EnglishClock private constructor(
          * they can form meaningful sentences regarding time.
          */
         val ENGLISH_WORDS_ORDERED: List<Word> = listOf(
-            Connector.IT_IS, Minutes.FIVE, Minutes.QUARTER, Minutes.TEN, Minutes.TWENTY,
-            Minutes.HALF, Connector.TO, Connector.PAST, Hour.NINE,
+            Connector.IT_IS, Minutes.HALF, Minutes.QUARTER, Minutes.TEN,
+            Minutes.TWENTY, Minutes.FIVE, Connector.TO, Connector.PAST, Hour.NINE,
             Hour.ONE, Hour.SIX, Hour.THREE, Hour.FOUR, Hour.FIVE, Hour.TWO,
             Hour.EIGHT, Hour.ELEVEN, Hour.SEVEN, Hour.TWELVE,
             Hour.TEN, Connector.O_CLOCK
