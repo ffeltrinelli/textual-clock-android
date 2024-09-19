@@ -1,9 +1,12 @@
 package ffeltrinelli.textualclock
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ffeltrinelli.textualclock.domain.clock.fill.ClockRowFiller
+import ffeltrinelli.textualclock.domain.clock.fill.RandomRowFiller
 import java.time.Clock
 import kotlin.random.Random
 
@@ -15,4 +18,11 @@ object SingletonDependencies {
 
     @Provides
     fun clock(): Clock = Clock.systemDefaultZone()
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class Bindings {
+    @Binds
+    abstract fun clockRowFiller(randomRowFiller: RandomRowFiller): ClockRowFiller
 }

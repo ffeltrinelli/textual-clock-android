@@ -25,10 +25,10 @@ class RandomizerTest {
     }
 
     @Test
-    fun `should generate a letter from an int`() {
+    fun `englishLowercaseLetter should generate a lower case letter from 'a' to 'z'`() {
         every { random.nextInt(any(), any()) } returns 'd'.code
 
-        val result = underTest.nextLetter()
+        val result = underTest.englishLowercaseLetter()
 
         assertEquals('d', result)
         verify { random.nextInt('a'.code, 'z'.code + 1) }

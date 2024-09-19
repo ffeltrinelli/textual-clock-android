@@ -5,11 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ffeltrinelli.textualclock.domain.Randomizer
 import ffeltrinelli.textualclock.domain.clock.ClockConfig
 import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.english.EnglishClock
 import ffeltrinelli.textualclock.domain.clock.english.EnglishTime
+import ffeltrinelli.textualclock.domain.clock.fill.ClockRowFiller
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -17,10 +17,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ClockViewModel @Inject constructor(
-    randomizer: Randomizer,
+    rowFiller: ClockRowFiller,
     englishTime: EnglishTime
 ): ViewModel() {
-    private val clockState = mutableStateOf(EnglishClock(randomizer, englishTime, ClockConfig(WORDS_PER_ROW)))
+    private val clockState = mutableStateOf(EnglishClock(rowFiller, englishTime, ClockConfig(WORDS_PER_ROW)))
 
     fun state(): State<TextualClock> = clockState
 

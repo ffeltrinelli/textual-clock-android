@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 import dagger.hilt.android.AndroidEntryPoint
 import ffeltrinelli.textualclock.domain.Randomizer
 import ffeltrinelli.textualclock.domain.clock.english.EnglishTime
+import ffeltrinelli.textualclock.domain.clock.fill.RandomRowFiller
 import ffeltrinelli.textualclock.model.ClockViewModel
 import ffeltrinelli.textualclock.ui.composable.ClockGrid
 import ffeltrinelli.textualclock.ui.theme.TextualClockTheme
@@ -55,9 +56,10 @@ class MainActivity : ComponentActivity() {
 fun TextualClockPreview() {
     TextualClockTheme {
         val randomizer = Randomizer(SingletonDependencies.random())
+        val rowFiller = RandomRowFiller(randomizer)
         val englishTime = EnglishTime(SingletonDependencies.clock())
         // Hilt does not support dependency injection of ViewModel in Preview,
         // so wiring dependencies manually
-        ClockGrid(clockViewModel = ClockViewModel(randomizer, englishTime))
+        ClockGrid(clockViewModel = ClockViewModel(rowFiller, englishTime))
     }
 }
