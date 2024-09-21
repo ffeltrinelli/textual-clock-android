@@ -9,14 +9,17 @@ import javax.inject.Inject
 /**
  * Filling strategy where filler characters are randomly distributed between words.
  */
-// TODO add unit test
 class RandomRowFiller @Inject constructor(
     private val randomizer: Randomizer
 ): ClockRowFiller {
+
     override fun fillRow(
         row: ClockRow,
         fillersNum: Int
     ): ClockRow {
+        require(fillersNum >= 0) {"fillersNum cannot be negative"}
+        if (fillersNum == 0) return row
+
         val fillersPerSlot: List<Int> = decideFillersPerSlot(row, fillersNum)
         val mergedWords: List<SelectableWord> = mergeFillersWithRow(row, fillersPerSlot)
         return ClockRow(mergedWords)
@@ -54,8 +57,10 @@ class RandomRowFiller @Inject constructor(
     ): List<SelectableWord> {
         val mergedWords = mutableListOf<SelectableWord>()
         for (i in fillersPerSlot.indices) {
-            val filler = EnglishFillerWord(fillersPerSlot[i], randomizer)
-            mergedWords.add(filler.toUnselected())
+            if (fillersPerSlot[i] > 0) {
+                val filler = EnglishFillerWord(fillersPerSlot[i], randomizer)
+                mergedWords.add(filler.toUnselected())
+            }
             if (i <= row.words.lastIndex) {
                 mergedWords.add(row.words[i])
             }

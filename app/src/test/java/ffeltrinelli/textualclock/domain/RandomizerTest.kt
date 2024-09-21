@@ -33,4 +33,14 @@ class RandomizerTest {
         assertEquals('d', result)
         verify { random.nextInt('a'.code, 'z'.code + 1) }
     }
+
+    @Test
+    fun `intBetween should generate an integer in the inclusive range`() {
+        every { random.nextInt(any(), any()) } returns 3
+
+        val result = underTest.intBetween(1, 4)
+
+        assertEquals(3, result)
+        verify { random.nextInt(1, 5) }
+    }
 }
