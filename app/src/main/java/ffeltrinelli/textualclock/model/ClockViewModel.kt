@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ffeltrinelli.textualclock.data.PreferencesHelper
 import ffeltrinelli.textualclock.domain.clock.ClockConfig
 import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.english.EnglishClock
@@ -18,9 +19,10 @@ import javax.inject.Inject
 @HiltViewModel
 class ClockViewModel @Inject constructor(
     rowFiller: ClockRowFiller,
-    englishTime: EnglishTime
+    englishTime: EnglishTime,
+    preferencesHelper: PreferencesHelper
 ): ViewModel() {
-    private val clockState = mutableStateOf(EnglishClock(rowFiller, englishTime, ClockConfig(WORDS_PER_ROW)))
+    private val clockState = mutableStateOf(EnglishClock(rowFiller, englishTime, ClockConfig(preferencesHelper.getWordsPerRow())))
 
     fun state(): State<TextualClock> = clockState
 
@@ -40,8 +42,5 @@ class ClockViewModel @Inject constructor(
 
     companion object {
         private const val ONE_MINUTE = 1000L * 60
-
-        // TODO add app configuration for this
-        private const val WORDS_PER_ROW = 2
     }
 }

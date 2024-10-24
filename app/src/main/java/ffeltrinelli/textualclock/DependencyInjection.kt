@@ -5,6 +5,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import ffeltrinelli.textualclock.data.PreferencesHelper
+import ffeltrinelli.textualclock.data.SharedPreferencesHelper
 import ffeltrinelli.textualclock.domain.clock.fill.ClockRowFiller
 import ffeltrinelli.textualclock.domain.clock.fill.RandomRowFiller
 import java.time.Clock
@@ -25,4 +27,7 @@ object SingletonDependencies {
 abstract class Bindings {
     @Binds
     abstract fun clockRowFiller(randomRowFiller: RandomRowFiller): ClockRowFiller
+
+    @Binds
+    abstract fun preferenceHelper(sharedPreferencesHelper: SharedPreferencesHelper): PreferencesHelper
 }
