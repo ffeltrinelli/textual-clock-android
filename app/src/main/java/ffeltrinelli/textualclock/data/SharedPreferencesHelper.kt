@@ -20,7 +20,7 @@ class SharedPreferencesHelper @Inject constructor(
             delegatedListeners.add(listener)
         }
         override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-            if (key != null) {
+            if (key != null && key in ALLOWED_KEYS) {
                 delegatedListeners.forEach { it.onPreferenceChanged(key) }
             }
         }
@@ -44,5 +44,6 @@ class SharedPreferencesHelper @Inject constructor(
         val TAG = SharedPreferencesHelper::class.simpleName
         const val WORDS_PER_ROW_KEY = "words_per_row"
         const val WORDS_PER_ROW_DEFAULT = 1
+        val ALLOWED_KEYS = listOf(WORDS_PER_ROW_KEY)
     }
 }
