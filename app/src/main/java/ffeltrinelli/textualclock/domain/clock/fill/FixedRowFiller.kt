@@ -4,7 +4,7 @@ import ffeltrinelli.textualclock.domain.clock.ClockRow
 import ffeltrinelli.textualclock.domain.words.FillerWord
 
 /**
- * Simple [ClockRowFiller] that always fills at the beginning of the rows
+ * Simple [ClockRowFiller] that always fills at the end of the row
  * by simply repeating the given filler character.
  * To be used in unit tests and Compose Preview.
  */
