@@ -11,7 +11,10 @@ import ffeltrinelli.textualclock.domain.words.english.Minutes.HALF
 import ffeltrinelli.textualclock.domain.words.english.Minutes.QUARTER
 import ffeltrinelli.textualclock.domain.words.english.Minutes.TWENTY
 import java.time.Clock
+import java.time.LocalDate
 import java.time.LocalTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import java.time.temporal.ChronoField
 import javax.inject.Inject
 
@@ -43,6 +46,21 @@ class EnglishTime @Inject constructor(
             in 50..54 -> listOf(IT_IS, Minutes.TEN, TO, nextHourWord)
             in 55..59 -> listOf(IT_IS, Minutes.FIVE, TO, nextHourWord)
             else -> throw IllegalArgumentException("Minute of time $time is in illegal range")
+        }
+    }
+
+    companion object {
+        /**
+         * English time always fixed to the given hour and minute.
+         * To be used in unit tests and Compose Preview.
+         */
+        fun fixed(hour: Int, minute: Int): EnglishTime {
+            val localTime = LocalTime.of(hour, minute)
+            val localDate = LocalDate.now()
+            val zoneId = ZoneId.systemDefault()
+            val instant = ZonedDateTime.of(localDate, localTime, zoneId).toInstant()
+            val clock = Clock.fixed(instant, zoneId)
+            return EnglishTime(clock)
         }
     }
 }

@@ -5,22 +5,16 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import dagger.hilt.android.AndroidEntryPoint
-import ffeltrinelli.textualclock.data.PreferencesHelper
-import ffeltrinelli.textualclock.domain.Randomizer
+import ffeltrinelli.textualclock.data.FixedPreferencesHelper
 import ffeltrinelli.textualclock.domain.clock.english.EnglishTime
-import ffeltrinelli.textualclock.domain.clock.fill.RandomRowFiller
+import ffeltrinelli.textualclock.domain.clock.fill.FixedRowFiller
 import ffeltrinelli.textualclock.model.ClockViewModel
-import ffeltrinelli.textualclock.ui.composable.ClockGrid
-import ffeltrinelli.textualclock.ui.theme.TextualClockTheme
+import ffeltrinelli.textualclock.ui.composable.MainComposable
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -29,11 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         keepScreenOn()
         setContent {
-            TextualClockTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    ClockGrid(Modifier.padding(innerPadding))
-                }
-            }
+            MainComposable()
         }
     }
 
@@ -55,15 +45,8 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun TextualClockPreview() {
-    TextualClockTheme {
-        val randomizer = Randomizer(SingletonDependencies.random())
-        val rowFiller = RandomRowFiller(randomizer)
-        val englishTime = EnglishTime(SingletonDependencies.clock())
-        val preferencesHelper = object : PreferencesHelper {
-            override fun getWordsPerRow() = 2
-        }
-        // Hilt does not support dependency injection of ViewModel in Preview,
-        // so wiring dependencies manually
-        ClockGrid(clockViewModel = ClockViewModel(rowFiller, englishTime, preferencesHelper))
-    }
+    val rowFiller = FixedRowFiller('a')
+    val englishTime = EnglishTime.fixed(3, 25)
+    val preferencesHelper = FixedPreferencesHelper(wordsPerRow = 2)
+    MainComposable(clockViewModel = ClockViewModel(rowFiller, englishTime, preferencesHelper))
 }

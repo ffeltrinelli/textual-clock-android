@@ -15,6 +15,7 @@ import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.ClockRow
 import ffeltrinelli.textualclock.domain.clock.english.EnglishClock.Companion.ENGLISH_WORDS_ORDERED
 import ffeltrinelli.textualclock.domain.clock.fill.ClockRowFiller
+import ffeltrinelli.textualclock.domain.clock.fill.FixedRowFiller
 import ffeltrinelli.textualclock.domain.words.FillerWord
 import ffeltrinelli.textualclock.domain.words.SelectableWord
 import ffeltrinelli.textualclock.domain.words.Word
@@ -33,7 +34,7 @@ class EnglishClockTest {
     @get:Rule
     val mockkRule = MockKRule(this)
 
-    private val rowFiller: ClockRowFiller = FakeRowFiller()
+    private val rowFiller: ClockRowFiller = FixedRowFiller(FILLER_CHAR)
 
     @MockK
     private lateinit var englishTime: EnglishTime
@@ -45,6 +46,7 @@ class EnglishClockTest {
         private val CURRENT_TIME_WORDS: List<Word> = listOf(IT_IS, FIVE)
         private val CURRENT_TIME_WORDS_2: List<Word> = listOf(TEN)
         private const val WORDS_PER_ROW = 2
+        private const val FILLER_CHAR = 'y'
     }
 
     @Before
@@ -112,15 +114,3 @@ private fun Assert<String>.isRepetitionOfCharacter(char: Char) = given { actual 
 }
 
 private fun TextualClock.allWords(): List<SelectableWord> = rows.flatMap { row -> row.words }
-
-private const val FILLER_CHAR = 'y'
-
-private class FakeFillerWord(private val length: Int): FillerWord {
-    override fun text(): String = FILLER_CHAR.toString().repeat(length)
-}
-
-private class FakeRowFiller: ClockRowFiller {
-    override fun fillRow(row: ClockRow, fillersNum: Int) = ClockRow(
-        row.words + FakeFillerWord(fillersNum).toUnselected()
-    )
-}
