@@ -1,12 +1,12 @@
 package ffeltrinelli.textualclock.model
 
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ffeltrinelli.textualclock.data.PreferenceChangeListener
 import ffeltrinelli.textualclock.data.PreferencesHelper
 import ffeltrinelli.textualclock.domain.clock.ClockConfig
 import ffeltrinelli.textualclock.domain.clock.TextualClock
@@ -25,9 +25,11 @@ class ClockViewModel @Inject constructor(
     private val preferencesHelper: PreferencesHelper
 ): ViewModel() {
     private val clockState = mutableStateOf(clockFullRebuild())
-    private val preferenceChangeListener = OnSharedPreferenceChangeListener { _,_ ->
-        Log.i(TAG, "Preference changed, rebuilding clock")
-        clockState.value = clockFullRebuild()
+    private val preferenceChangeListener = object : PreferenceChangeListener {
+        override fun onPreferenceChanged(key: String) {
+            Log.i(TAG, "Preference $key changed, rebuilding clock")
+            clockState.value = clockFullRebuild()
+        }
     }
 
     fun state(): State<TextualClock> = clockState
