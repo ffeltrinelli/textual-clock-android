@@ -8,7 +8,10 @@ import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-
+/**
+ * Implementation of [PreferencesHelper] using the default [SharedPreferences].
+ */
+// TODO add unit test
 class SharedPreferencesHelper @Inject constructor(
     @ApplicationContext context: Context
 ): PreferencesHelper {
