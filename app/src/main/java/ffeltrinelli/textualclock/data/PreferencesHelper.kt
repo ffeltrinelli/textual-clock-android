@@ -12,6 +12,6 @@ interface PreferencesHelper {
 /**
  * A listener that will be notified of preference changes.
  */
-interface PreferenceChangeListener {
+fun interface PreferenceChangeListener {
     fun onPreferenceChanged(key: String)
 }

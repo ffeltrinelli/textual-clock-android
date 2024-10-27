@@ -1,5 +1,6 @@
 package ffeltrinelli.textualclock.domain.clock.english
 
+import ffeltrinelli.textualclock.domain.clock.LocalClock
 import ffeltrinelli.textualclock.domain.words.Word
 import ffeltrinelli.textualclock.domain.words.english.Connector.IT_IS
 import ffeltrinelli.textualclock.domain.words.english.Connector.O_CLOCK
@@ -10,11 +11,7 @@ import ffeltrinelli.textualclock.domain.words.english.Minutes
 import ffeltrinelli.textualclock.domain.words.english.Minutes.HALF
 import ffeltrinelli.textualclock.domain.words.english.Minutes.QUARTER
 import ffeltrinelli.textualclock.domain.words.english.Minutes.TWENTY
-import java.time.Clock
-import java.time.LocalDate
 import java.time.LocalTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
 import java.time.temporal.ChronoField
 import javax.inject.Inject
 
@@ -22,10 +19,10 @@ import javax.inject.Inject
  * Helper to represent time as text in english.
  */
 class EnglishTime @Inject constructor(
-    private val clock: Clock
+    private val localClock: LocalClock
 ) {
 
-    fun currentTime(): LocalTime = LocalTime.now(clock)
+    fun currentTime(): LocalTime = localClock.now()
 
     fun convertToWords(time: LocalTime): List<Word> {
         val amPmHour = time.get(ChronoField.CLOCK_HOUR_OF_AMPM)
@@ -54,13 +51,6 @@ class EnglishTime @Inject constructor(
          * English time always fixed to the given hour and minute.
          * To be used in unit tests and Compose Preview.
          */
-        fun fixed(hour: Int, minute: Int): EnglishTime {
-            val localTime = LocalTime.of(hour, minute)
-            val localDate = LocalDate.now()
-            val zoneId = ZoneId.systemDefault()
-            val instant = ZonedDateTime.of(localDate, localTime, zoneId).toInstant()
-            val clock = Clock.fixed(instant, zoneId)
-            return EnglishTime(clock)
-        }
+        fun fixed(hour: Int, minute: Int) = EnglishTime { LocalTime.of(hour, minute) }
     }
 }

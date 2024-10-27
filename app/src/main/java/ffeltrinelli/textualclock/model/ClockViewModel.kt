@@ -25,12 +25,11 @@ class ClockViewModel @Inject constructor(
     private val preferencesHelper: PreferencesHelper
 ): ViewModel() {
     private val clockState = mutableStateOf(clockFullRebuild())
-    private val preferenceChangeListener = object : PreferenceChangeListener {
-        override fun onPreferenceChanged(key: String) {
+    private val preferenceChangeListener =
+        PreferenceChangeListener { key ->
             Log.i(TAG, "Preference $key changed, rebuilding clock")
             clockState.value = clockFullRebuild()
         }
-    }
 
     fun state(): State<TextualClock> = clockState
 
