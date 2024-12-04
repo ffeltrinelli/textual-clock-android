@@ -38,7 +38,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
@@ -46,6 +46,11 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
         }
     }
 }
@@ -68,6 +73,8 @@ dependencies {
     ksp(libs.hiltCompiler)
     testImplementation(libs.junit)
     testImplementation(libs.junitParams)
+    testImplementation(libs.androidx.junit)
+    testImplementation(libs.robolectric)
     testImplementation(libs.mockk)
     testImplementation(libs.assertk)
     androidTestImplementation(libs.androidx.junit)

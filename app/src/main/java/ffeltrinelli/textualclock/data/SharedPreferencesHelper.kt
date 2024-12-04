@@ -11,7 +11,6 @@ import javax.inject.Inject
 /**
  * Implementation of [PreferencesHelper] using the default [SharedPreferences].
  */
-// TODO add unit test
 class SharedPreferencesHelper @Inject constructor(
     @ApplicationContext context: Context
 ): PreferencesHelper {
