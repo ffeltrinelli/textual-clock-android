@@ -11,8 +11,8 @@ import assertk.assertions.prop
 import assertk.assertions.support.expected
 import assertk.assertions.support.show
 import ffeltrinelli.textualclock.domain.clock.ClockConfig
-import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.ClockRow
+import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.english.EnglishClock.Companion.ENGLISH_WORDS_ORDERED
 import ffeltrinelli.textualclock.domain.clock.fill.ClockRowFiller
 import ffeltrinelli.textualclock.domain.clock.fill.FixedRowFiller
@@ -83,9 +83,11 @@ class EnglishClockTest {
 
     @Test
     fun `all current time words are selected, the others are not`() {
-        assertThat(underTest.allWords()).each { it.matchesPredicate { word ->
-            word.isSelected == word.value in CURRENT_TIME_WORDS
-        } }
+        assertThat(underTest.allWords()).each {
+            it.matchesPredicate { word ->
+                word.isSelected == word.value in CURRENT_TIME_WORDS
+            }
+        }
     }
 
     @Test
@@ -96,9 +98,11 @@ class EnglishClockTest {
         val newWordsAfterSelectionUpdate = underTest.updateWordsSelection().allWords()
 
         assertThat(copyOfPreviousWords.map { it.value }).isEqualTo(newWordsAfterSelectionUpdate.map { it.value })
-        assertThat(newWordsAfterSelectionUpdate).each { it.matchesPredicate { word ->
-            word.isSelected == word.value in CURRENT_TIME_WORDS_2
-        } }
+        assertThat(newWordsAfterSelectionUpdate).each {
+            it.matchesPredicate { word ->
+                word.isSelected == word.value in CURRENT_TIME_WORDS_2
+            }
+        }
     }
 }
 

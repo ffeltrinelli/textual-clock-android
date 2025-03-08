@@ -6,16 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import ffeltrinelli.textualclock.domain.clock.TextualClock
-import ffeltrinelli.textualclock.model.ClockViewModel
 import ffeltrinelli.textualclock.ui.theme.BlueLight
 
 @Composable
-fun ClockScreen(modifier: Modifier = Modifier, clockViewModel: ClockViewModel) {
-    val textualClock: TextualClock by clockViewModel.state()
+fun ClockScreen(textualClock: TextualClock, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize().background(BlueLight),
         contentAlignment = Alignment.Center

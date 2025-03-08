@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package ffeltrinelli.textualclock.ui.theme
 
 import androidx.compose.ui.graphics.Color

@@ -4,6 +4,8 @@ assertk = "0.28.1"
 androidxJunit = "1.2.1"
 androidxLifecycle = "2.8.7"
 androidxNavigation = "2.8.8"
+detekt = "1.23.8"
+detektCompose = "0.4.22"
 hilt = "2.51.1"
 kotlin = "2.0.20"
 kotlinxSerialization = "1.7.3"
@@ -43,9 +45,12 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 compose-preference = { group = "me.zhanghai.compose.preference", name = "library", version.ref = "composePreference" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 assertk = { group = "com.willowtreeapps.assertk", name = "assertk", version.ref = "assertk" }
+detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detektCompose"}
+detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

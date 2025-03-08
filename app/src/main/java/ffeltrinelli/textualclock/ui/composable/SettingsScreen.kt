@@ -11,7 +11,7 @@ import me.zhanghai.compose.preference.ProvidePreferenceLocals
 import me.zhanghai.compose.preference.sliderPreference
 
 @Composable
-fun SettingsScreen(modifier: Modifier) {
+fun SettingsScreen(modifier: Modifier = Modifier) {
     ProvidePreferenceLocals {
         LazyColumn(modifier = modifier.fillMaxSize()) {
             intSliderPreference(

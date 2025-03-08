@@ -47,7 +47,7 @@ class EnglishTimeTest {
 
     @Test
     @Parameters(method = "timeToWordsExamples")
-    fun `converts time to words`(time: LocalTime, expected: List<Word>){
+    fun `converts time to words`(time: LocalTime, expected: List<Word>) {
         val result = underTest.convertToWords(time)
         assertThat(result).isEqualTo(expected)
     }

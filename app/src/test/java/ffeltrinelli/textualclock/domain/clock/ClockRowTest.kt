@@ -32,10 +32,12 @@ class ClockRowTest {
 
     @Test
     fun `selects words in the list, deselects others, ignores missing ones`() {
-        underTest = ClockRow(listOf(
-            SelectableWord(IT_IS, isSelected = false),
-            SelectableWord(PAST, isSelected = true)
-        ))
+        underTest = ClockRow(
+            listOf(
+                SelectableWord(IT_IS, isSelected = false),
+                SelectableWord(PAST, isSelected = true)
+            )
+        )
 
         val result = underTest.selectWordsIn(listOf(IT_IS, O_CLOCK))
 

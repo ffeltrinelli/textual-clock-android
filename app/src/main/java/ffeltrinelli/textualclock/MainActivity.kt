@@ -44,7 +44,8 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun TextualClockPreview() {
+@Suppress("MagicNumber", "UnusedPrivateMember")
+private fun TextualClockPreview() {
     val rowFiller = FixedRowFiller('a')
     val englishTime = EnglishTime.fixed(3, 25)
     val preferencesHelper = FixedPreferencesHelper(wordsPerRow = 2)

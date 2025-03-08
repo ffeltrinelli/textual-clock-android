@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.detekt)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
@@ -55,6 +56,12 @@ android {
     }
 }
 
+detekt {
+    toolVersion = "1.23.8"
+    config.setFrom(file("../detekt.yml"))
+    buildUponDefaultConfig = true
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -83,4 +90,6 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    detektPlugins(libs.detekt.compose)
+    detektPlugins(libs.detekt.formatting)
 }

@@ -11,13 +11,13 @@ import javax.inject.Inject
  */
 class RandomRowFiller @Inject constructor(
     private val randomizer: Randomizer
-): ClockRowFiller {
+) : ClockRowFiller {
 
     override fun fillRow(
         row: ClockRow,
         fillersNum: Int
     ): ClockRow {
-        require(fillersNum >= 0) {"fillersNum cannot be negative"}
+        require(fillersNum >= 0) { "fillersNum cannot be negative" }
         if (fillersNum == 0) return row
 
         val fillersPerSlot: List<Int> = decideFillersPerSlot(row, fillersNum)
