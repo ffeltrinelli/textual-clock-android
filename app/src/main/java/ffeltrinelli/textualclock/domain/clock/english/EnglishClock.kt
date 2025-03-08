@@ -1,9 +1,9 @@
 package ffeltrinelli.textualclock.domain.clock.english
 
 import ffeltrinelli.textualclock.domain.clock.ClockConfig
-import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.ClockRow
 import ffeltrinelli.textualclock.domain.clock.ClockRow.Companion.unselectedRowFrom
+import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.fill.ClockRowFiller
 import ffeltrinelli.textualclock.domain.words.Word
 import ffeltrinelli.textualclock.domain.words.english.Connector
@@ -19,7 +19,8 @@ class EnglishClock private constructor(
 ) : TextualClock(rows) {
 
     constructor(rowFiller: ClockRowFiller, englishTime: EnglishTime, clockConfig: ClockConfig) : this(
-        englishTime, generateWords(rowFiller, englishTime, clockConfig)
+        englishTime,
+        generateWords(rowFiller, englishTime, clockConfig)
     )
 
     /**
@@ -62,10 +63,14 @@ class EnglishClock private constructor(
         private fun normalizeLength(rows: List<ClockRow>, rowFiller: ClockRowFiller): List<ClockRow> {
             val maxRowLength = rows.maxOf { it.length }
             val normalizedRows: List<ClockRow> = rows.map { row ->
-                if (row.length < maxRowLength) rowFiller.fillRow(
-                    row = row,
-                    fillersNum = maxRowLength - row.length,
-                ) else row
+                if (row.length < maxRowLength) {
+                    rowFiller.fillRow(
+                        row = row,
+                        fillersNum = maxRowLength - row.length
+                    )
+                } else {
+                    row
+                }
             }
             return normalizedRows
         }

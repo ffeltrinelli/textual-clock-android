@@ -13,7 +13,7 @@ import javax.inject.Inject
  */
 class SharedPreferencesHelper @Inject constructor(
     @ApplicationContext context: Context
-): PreferencesHelper {
+) : PreferencesHelper {
     private val preferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     private val preferenceChangeListener = object : OnSharedPreferenceChangeListener {

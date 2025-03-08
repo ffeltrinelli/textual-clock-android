@@ -46,6 +46,7 @@ compose-preference = { group = "me.zhanghai.compose.preference", name = "library
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 assertk = { group = "com.willowtreeapps.assertk", name = "assertk", version.ref = "assertk" }
 detekt-compose = { group = "io.nlopez.compose.rules", name = "detekt", version.ref = "detektCompose"}
+detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

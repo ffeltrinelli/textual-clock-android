@@ -2,7 +2,7 @@ package ffeltrinelli.textualclock.domain.words.english
 
 import ffeltrinelli.textualclock.domain.words.Word
 
-enum class Connector(private val text: String): Word {
+enum class Connector(private val text: String) : Word {
     IT_IS("it's"),
     PAST("past"),
     TO("to"),
@@ -11,7 +11,7 @@ enum class Connector(private val text: String): Word {
     override fun text() = text
 }
 
-enum class Minutes(private val text: String): Word {
+enum class Minutes(private val text: String) : Word {
     FIVE("five"),
     TEN("ten"),
     QUARTER("quarter"),
@@ -22,7 +22,7 @@ enum class Minutes(private val text: String): Word {
 }
 
 @Suppress("MagicNumber")
-enum class Hour(private val text: String, private val amPmHour: Int): Word {
+enum class Hour(private val text: String, private val amPmHour: Int) : Word {
     ONE("one", 1),
     TWO("two", 2),
     THREE("three", 3),

@@ -91,4 +91,5 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     detektPlugins(libs.detekt.compose)
+    detektPlugins(libs.detekt.formatting)
 }

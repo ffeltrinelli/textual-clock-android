@@ -23,7 +23,7 @@ class ClockViewModel @Inject constructor(
     private val rowFiller: ClockRowFiller,
     private val englishTime: EnglishTime,
     private val preferencesHelper: PreferencesHelper
-): ViewModel() {
+) : ViewModel() {
     private val clockState = mutableStateOf(clockFullRebuild())
     private val preferenceChangeListener =
         PreferenceChangeListener { key ->

@@ -8,12 +8,12 @@ import ffeltrinelli.textualclock.domain.words.FillerWord
  * by simply repeating the given filler character.
  * To be used in unit tests and Compose Preview.
  */
-class FixedRowFiller(private val fillerChar: Char): ClockRowFiller {
+class FixedRowFiller(private val fillerChar: Char) : ClockRowFiller {
     override fun fillRow(row: ClockRow, fillersNum: Int) = ClockRow(
         row.words + FixedFillerWord(fillersNum, fillerChar).toUnselected()
     )
 }
 
-private class FixedFillerWord(private val length: Int, private val fillerChar: Char): FillerWord {
+private class FixedFillerWord(private val length: Int, private val fillerChar: Char) : FillerWord {
     override fun text(): String = fillerChar.toString().repeat(length)
 }
