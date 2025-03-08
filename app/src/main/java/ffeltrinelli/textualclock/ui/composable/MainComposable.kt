@@ -12,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -19,19 +20,21 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.model.ClockViewModel
 import ffeltrinelli.textualclock.ui.theme.TextualClockTheme
 import kotlinx.serialization.Serializable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainComposable(clockViewModel: ClockViewModel = viewModel()) {
+fun MainComposable(modifier: Modifier = Modifier, clockViewModel: ClockViewModel = viewModel()) {
     val navController = rememberNavController()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
+    val textualClock: TextualClock by clockViewModel.state()
 
     TextualClockTheme {
         Scaffold(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .nestedScroll(scrollBehavior.nestedScrollConnection),
             topBar = {
@@ -59,7 +62,7 @@ fun MainComposable(clockViewModel: ClockViewModel = viewModel()) {
         ) { innerPadding ->
             NavHost(navController = navController, startDestination = ClockDestination) {
                 composable<ClockDestination> {
-                    ClockScreen(Modifier.padding(innerPadding), clockViewModel)
+                    ClockScreen(textualClock, Modifier.padding(innerPadding))
                 }
                 composable<SettingsDestination> {
                     SettingsScreen(Modifier.padding(innerPadding))

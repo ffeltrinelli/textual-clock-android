@@ -21,6 +21,7 @@ enum class Minutes(private val text: String): Word {
     override fun text() = text
 }
 
+@Suppress("MagicNumber")
 enum class Hour(private val text: String, private val amPmHour: Int): Word {
     ONE("one", 1),
     TWO("two", 2),

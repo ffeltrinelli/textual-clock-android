@@ -7,5 +7,5 @@ package ffeltrinelli.textualclock.data
 class FixedPreferencesHelper(private val wordsPerRow: Int): PreferencesHelper {
     override fun getWordsPerRow() = wordsPerRow
 
-    override fun listenToPreferenceChange(listener: PreferenceChangeListener) { }
+    override fun listenToPreferenceChange(listener: PreferenceChangeListener) { /* do nothing */ }
 }

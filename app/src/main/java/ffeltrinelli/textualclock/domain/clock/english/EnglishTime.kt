@@ -24,6 +24,7 @@ class EnglishTime @Inject constructor(
 
     fun currentTime(): LocalTime = localClock.now()
 
+    @Suppress("MagicNumber")
     fun convertToWords(time: LocalTime): List<Word> {
         val amPmHour = time.get(ChronoField.CLOCK_HOUR_OF_AMPM)
         val hourWord = Hour.fromAmPmHour(amPmHour)

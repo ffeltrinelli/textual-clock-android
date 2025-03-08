@@ -48,7 +48,8 @@ class ClockViewModel @Inject constructor(
         }
     }
 
-    private fun clockFullRebuild(): EnglishClock = EnglishClock(rowFiller, englishTime, ClockConfig(preferencesHelper.getWordsPerRow()))
+    private fun clockFullRebuild(): EnglishClock =
+        EnglishClock(rowFiller, englishTime, ClockConfig(preferencesHelper.getWordsPerRow()))
     private fun clockUpdateWordsSelection(): EnglishClock = clockState.value.updateWordsSelection()
 
     companion object {

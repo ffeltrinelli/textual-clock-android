@@ -41,7 +41,11 @@ class EnglishClock private constructor(
             Hour.TEN, Connector.O_CLOCK
         )
 
-        private fun generateWords(rowFiller: ClockRowFiller, englishTime: EnglishTime, clockConfig: ClockConfig): List<ClockRow> {
+        private fun generateWords(
+            rowFiller: ClockRowFiller,
+            englishTime: EnglishTime,
+            clockConfig: ClockConfig
+        ): List<ClockRow> {
             var rows = chunkWordsIntoRows(clockConfig.wordsPerRoW)
             rows = normalizeLength(rows, rowFiller)
             return selectWordsBasedOnTime(rows, englishTime)
