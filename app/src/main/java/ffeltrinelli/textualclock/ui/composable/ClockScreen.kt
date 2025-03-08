@@ -9,21 +9,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.model.ClockViewModel
 import ffeltrinelli.textualclock.ui.theme.BlueLight
 
 @Composable
-fun ClockGrid(modifier: Modifier = Modifier, clockViewModel: ClockViewModel = viewModel()) {
+fun ClockScreen(modifier: Modifier = Modifier, clockViewModel: ClockViewModel) {
     val textualClock: TextualClock by clockViewModel.state()
     Box(
-        modifier = Modifier.fillMaxSize().background(BlueLight),
+        modifier = modifier.fillMaxSize().background(BlueLight),
         contentAlignment = Alignment.Center
     ) {
         LazyVerticalGrid(
-            columns = GridCells.Fixed(textualClock.rowLength),
-            modifier = modifier
+            columns = GridCells.Fixed(textualClock.rowLength)
         ) {
             textualClock.rows.forEach { row ->
                 row.words.forEach { word ->

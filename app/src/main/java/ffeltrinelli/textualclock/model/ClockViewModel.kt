@@ -1,10 +1,13 @@
 package ffeltrinelli.textualclock.model
 
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ffeltrinelli.textualclock.data.PreferenceChangeListener
+import ffeltrinelli.textualclock.data.PreferencesHelper
 import ffeltrinelli.textualclock.domain.clock.ClockConfig
 import ffeltrinelli.textualclock.domain.clock.TextualClock
 import ffeltrinelli.textualclock.domain.clock.english.EnglishClock
@@ -17,31 +20,39 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ClockViewModel @Inject constructor(
-    rowFiller: ClockRowFiller,
-    englishTime: EnglishTime
+    private val rowFiller: ClockRowFiller,
+    private val englishTime: EnglishTime,
+    private val preferencesHelper: PreferencesHelper
 ): ViewModel() {
-    private val clockState = mutableStateOf(EnglishClock(rowFiller, englishTime, ClockConfig(WORDS_PER_ROW)))
+    private val clockState = mutableStateOf(clockFullRebuild())
+    private val preferenceChangeListener =
+        PreferenceChangeListener { key ->
+            Log.i(TAG, "Preference $key changed, rebuilding clock")
+            clockState.value = clockFullRebuild()
+        }
 
     fun state(): State<TextualClock> = clockState
 
     init {
         startClockTick()
+        preferencesHelper.listenToPreferenceChange(preferenceChangeListener)
     }
 
     private fun startClockTick() {
         viewModelScope.launch {
             while (coroutineContext.isActive) {
-                println("Updating clock")
-                clockState.value = clockState.value.updateWordsSelection()
+                Log.i(TAG, "Clock ticked, updating words selection")
+                clockState.value = clockUpdateWordsSelection()
                 delay(ONE_MINUTE)
             }
         }
     }
 
-    companion object {
-        private const val ONE_MINUTE = 1000L * 60
+    private fun clockFullRebuild(): EnglishClock = EnglishClock(rowFiller, englishTime, ClockConfig(preferencesHelper.getWordsPerRow()))
+    private fun clockUpdateWordsSelection(): EnglishClock = clockState.value.updateWordsSelection()
 
-        // TODO add app configuration for this
-        private const val WORDS_PER_ROW = 2
+    companion object {
+        val TAG = ClockViewModel::class.simpleName
+        private const val ONE_MINUTE = 1000L * 60
     }
 }
